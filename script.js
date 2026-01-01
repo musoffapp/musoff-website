@@ -78,10 +78,86 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe feature cards
+// Feature Carousel Navigation
 document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.features-carousel');
+    const prevBtn = document.querySelector('.carousel-btn-prev');
+    const nextBtn = document.querySelector('.carousel-btn-next');
     const featureCards = document.querySelectorAll('.feature-card');
     
+    if (!carousel || !prevBtn || !nextBtn) return;
+    
+    let currentIndex = 0;
+    const totalCards = featureCards.length;
+    
+    function updateButtons() {
+        if (currentIndex === 0) {
+            prevBtn.style.opacity = '0.3';
+            prevBtn.style.pointerEvents = 'none';
+        } else {
+            prevBtn.style.opacity = '1';
+            prevBtn.style.pointerEvents = 'auto';
+        }
+        
+        if (currentIndex === totalCards - 1) {
+            nextBtn.style.opacity = '0.3';
+            nextBtn.style.pointerEvents = 'none';
+        } else {
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'auto';
+        }
+    }
+    
+    function scrollToCard(index) {
+        if (index < 0 || index >= totalCards) return;
+        
+        const card = featureCards[index];
+        const scrollPosition = card.offsetLeft - carousel.offsetLeft;
+        
+        carousel.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+        
+        currentIndex = index;
+        updateButtons();
+    }
+    
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            scrollToCard(currentIndex - 1);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < totalCards - 1) {
+            scrollToCard(currentIndex + 1);
+        }
+    });
+    
+    // Update index based on scroll position
+    let scrollTimeout;
+    carousel.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const scrollPosition = carousel.scrollLeft;
+            const cardWidth = featureCards[0].offsetWidth;
+            
+            // Find which card is most visible
+            let newIndex = Math.round(scrollPosition / cardWidth);
+            newIndex = Math.max(0, Math.min(newIndex, totalCards - 1));
+            
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                updateButtons();
+            }
+        }, 100);
+    });
+    
+    // Initialize buttons
+    updateButtons();
+    
+    // Observe feature cards for animations
     featureCards.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
