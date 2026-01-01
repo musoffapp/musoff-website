@@ -184,7 +184,7 @@ body {
     height: 648px;
     background: #1d1d1f;
     border-radius: 55px;
-    padding: 8px;
+    padding: 10px;
     box-shadow: 
         0 0 0 1px rgba(0, 0, 0, 0.2),
         0 30px 80px rgba(0, 0, 0, 0.3),
@@ -194,7 +194,7 @@ body {
 
 .phone-notch {
     position: absolute;
-    top: 8px;
+    top: 12px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -362,9 +362,11 @@ body {
     .phone-mockup {
         width: 250px;
         height: 540px;
+        padding: 8px;
     }
     
     .phone-notch {
+        top: 10px;
         width: 105px;
         height: 31px;
         border-radius: 16px;
