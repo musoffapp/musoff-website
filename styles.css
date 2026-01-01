@@ -341,7 +341,7 @@ body {
     overflow: hidden;
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.06);
-    min-width: 100%;
+    width: 400px;
     flex-shrink: 0;
 }
 
@@ -486,7 +486,11 @@ body {
     }
 
     .features-carousel {
-        gap: 2rem;
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        width: 320px;
     }
 
     .feature-image .phone-mockup {
