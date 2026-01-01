@@ -112,7 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index < 0 || index >= totalCards) return;
         
         const card = featureCards[index];
-        const scrollPosition = card.offsetLeft - carousel.offsetLeft;
+        // offsetLeft gives position relative to offsetParent (which is the carousel)
+        const scrollPosition = card.offsetLeft;
         
         carousel.scrollTo({
             left: scrollPosition,
@@ -135,23 +136,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Update index based on scroll position
+    // Update index based on scroll position (for manual scrolling)
     let scrollTimeout;
     carousel.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            const scrollPosition = carousel.scrollLeft;
-            const cardWidth = featureCards[0].offsetWidth;
+            const scrollLeft = carousel.scrollLeft;
             
-            // Find which card is most visible
-            let newIndex = Math.round(scrollPosition / cardWidth);
-            newIndex = Math.max(0, Math.min(newIndex, totalCards - 1));
+            // Find which card is closest to the current scroll position
+            let closestIndex = 0;
+            let closestDistance = Infinity;
             
-            if (newIndex !== currentIndex) {
-                currentIndex = newIndex;
+            featureCards.forEach((card, index) => {
+                const distance = Math.abs(card.offsetLeft - scrollLeft);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+            
+            if (closestIndex !== currentIndex) {
+                currentIndex = closestIndex;
                 updateButtons();
             }
-        }, 100);
+        }, 150);
     });
     
     // Initialize buttons
