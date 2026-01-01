@@ -208,9 +208,6 @@ body {
     background: white;
     border-radius: 40px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
 }
 
@@ -384,3 +381,4 @@ body {
         text-align: center;
     }
 }
+
