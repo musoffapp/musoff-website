@@ -1,4 +1,3 @@
-// this is just for a little refresh
 // Mobile Navigation Toggle
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
@@ -83,12 +82,12 @@ const observer = new IntersectionObserver((entries) => {
 document.addEventListener('DOMContentLoaded', () => {
     const featureCards = document.querySelectorAll('.feature-card');
     const steps = document.querySelectorAll('.step');
-    const pricingCards = document.querySelectorAll('.pricing-card');
     
-    [...featureCards, ...steps, ...pricingCards].forEach((el, index) => {
+    [...featureCards, ...steps].forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
         observer.observe(el);
     });
 });
+
