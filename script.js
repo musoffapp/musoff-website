@@ -55,9 +55,9 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
     if (currentScroll > 100) {
-        navbar.style.boxShadow = '0 4px 12px rgba(142, 15, 239, 0.2)';
+        navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
     } else {
-        navbar.style.boxShadow = '0 2px 4px rgba(142, 15, 239, 0.1)';
+        navbar.style.boxShadow = 'none';
     }
     
     lastScroll = currentScroll;
@@ -78,16 +78,14 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe feature cards and steps
+// Observe feature cards
 document.addEventListener('DOMContentLoaded', () => {
     const featureCards = document.querySelectorAll('.feature-card');
-    const steps = document.querySelectorAll('.step');
     
-    [...featureCards, ...steps].forEach((el, index) => {
+    featureCards.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
         observer.observe(el);
     });
 });
-
